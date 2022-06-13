@@ -2,18 +2,18 @@ require 'rails_helper'
 
 RSpec.describe ForecastRepo do
   before :each do
-    allow_any_instance_of(CurrentForecast)
-      .to receive(:initialize)
+    allow(CurrentForecast)
+      .to receive(:new)
       .with({})
       .and_return(an_instance_of(CurrentForecast))
 
-    allow_any_instance_of(HourlyForecast)
-      .to receive(:initialize)
+    allow(HourlyForecast)
+      .to receive(:new)
       .with({})
       .and_return(an_instance_of(HourlyForecast))
 
-    allow_any_instance_of(DailyForecast)
-      .to receive(:initialize)
+    allow(DailyForecast)
+      .to receive(:new)
       .with({})
       .and_return(an_instance_of(DailyForecast))
 
@@ -37,13 +37,17 @@ RSpec.describe ForecastRepo do
 
   it 'has readable attributes' do
     repo = ForecastRepo.new(@forecast_repo_data)
-
-    expect(repo.current_forecast).to be_a CurrentForecast
+    
+    expect(repo.current_forecast.expected).to eq CurrentForecast
 
     expect(repo.hourly_forecasts).to be_an Array
-    expect(repo.hourly_forecasts).to be_all HourlyForecast
+    repo.hourly_forecasts.each do |forecast|
+      expect(forecast.expected).to eq HourlyForecast
+    end
 
     expect(repo.daily_forecasts).to be_an Array
-    expect(repo.daily_forecasts).to be_all DailyForecast
+    repo.daily_forecasts.each do |forecast|
+      expect(forecast.expected).to eq DailyForecast
+    end
   end
 end
