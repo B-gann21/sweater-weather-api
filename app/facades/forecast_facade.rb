@@ -2,7 +2,7 @@ class ForecastFacade
   def self.hourly_forecast(city)
     raw_forecast_data = OpenWeatherMapService.get_forecast(city_coordinates(city))
 
-    raw_forecast_data[:hourly].map { |hourly_data| Forecast.new(hourly_data) }
+    raw_forecast_data[:hourly].map { |hourly_data| HourlyForecast.new(hourly_data) }
   end
 
   def self.city_coordinates(city)

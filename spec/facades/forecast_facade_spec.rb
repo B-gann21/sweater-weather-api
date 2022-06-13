@@ -3,6 +3,10 @@ require 'rails_helper'
 RSpec.describe ForecastFacade do
   context 'class methods' do
     it '.city_coordinates returns a hash of latitude and longitude' do
+      denver_data = File.read('spec/fixtures/map_quest_denver_response.json')
+      stub_request(:get, "http://www.mapquestapi.com/geocoding/v1/address?key=#{ENV['map_quest_key']}&location=denver,co")
+        .to_return(status: 200, body: denver_data, headers: {})
+
       coordinates = ForecastFacade.city_coordinates('denver,co')
 
       expect(coordinates).to be_a Hash
@@ -13,11 +17,11 @@ RSpec.describe ForecastFacade do
       expect(coordinates[:lng]).to eq -104.984853
     end
 
-    it '.hourly_forecast returns an array of Forecast objects' do
+    it '.hourly_forecast returns an array of HourlyForecast objects' do
       forecasts = ForecastFacade.hourly_forecast('denver,co')
 
       expect(forecasts).to be_an Array
-      expect(forecasts).to be_all Forecast
+      expect(forecasts).to be_all HourlyForecast
     end
 
     it '.current_forecast returns a CurrentForecast object' do

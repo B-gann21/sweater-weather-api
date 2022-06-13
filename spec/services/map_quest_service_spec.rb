@@ -3,6 +3,10 @@ require 'rails_helper'
 RSpec.describe MapQuestService do
   context 'class methods' do
     it '.get_city_info returns a hash of a given city' do
+      denver_data = File.read('spec/fixtures/map_quest_denver_response.json')
+      stub_request(:get, "http://www.mapquestapi.com/geocoding/v1/address?key=#{ENV['map_quest_key']}&location=denver,co")
+        .to_return(status: 200, body: denver_data, headers: {})
+
       result = MapQuestService.get_city_info('denver,co')
       expect(result).to be_a Hash
 
@@ -12,7 +16,7 @@ RSpec.describe MapQuestService do
       expect(result).to have_key :results
       expect(result[:results]).to be_a Array
 
-      city_data = result[:results][0][:location][0]
+      city_data = result[:results][0][:locations][0]
 
       expect(city_data).to have_key :latLng
       expect(city_data[:latLng]).to be_a Hash
@@ -20,8 +24,8 @@ RSpec.describe MapQuestService do
       expect(city_data[:latLng]).to have_key :lat
       expect(city_data[:latLng][:lat]).to be_a Float
 
-      expect(city_data[:latLng]).to have_key :lon
-      expect(city_data[:latLng][:lon]).to be_a Float
+      expect(city_data[:latLng]).to have_key :lng
+      expect(city_data[:latLng][:lng]).to be_a Float
     end
   end
 end
