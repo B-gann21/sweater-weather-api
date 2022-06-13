@@ -3,6 +3,17 @@ require 'rails_helper'
 RSpec.describe 'Searching for books by location' do
   context 'happy path tests' do
     before :each do
+      books_response = File.read('spec/fixtures/books_response.json')
+      stub_request(:get, "http://openlibrary.org/search.json?q=denver,co")
+        .to_return(status: 200, body: books_response, headers: {})
+
+      denver_data = File.read('spec/fixtures/map_quest_denver_response.json')
+      stub_request(:get, "http://www.mapquestapi.com/geocoding/v1/address")
+        .to_return(status: 200, body: denver_data, headers: {})
+
+      denver_forecast_response = File.read('spec/fixtures/denver_forecast_response.json')
+      stub_request(:get, "https://api.openweathermap.org/data/2.5/onecall")
+        .to_return(status: 200, body: denver_forecast_response, headers: {})
       get '/api/v1/book-search?location=denver,co&quantity=5'
 
       @full_response = JSON.parse(response.body, symbolize_names: true) 

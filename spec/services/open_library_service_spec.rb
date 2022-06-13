@@ -3,6 +3,10 @@ require 'rails_helper'
 RSpec.describe OpenLibraryService do
   context 'class methods' do
     it '.get_book returns books with a given location in the title' do
+      books_response = File.read('spec/fixtures/books_response.json')
+      stub_request(:get, "http://openlibrary.org/search.json?q=denver,co")
+        .to_return(status: 200, body: books_response, headers: {})
+
       result = OpenLibraryService.get_books('denver,co')
       expect(result).to be_a Hash
       expect(result).to have_key :docs
