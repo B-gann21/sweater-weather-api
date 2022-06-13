@@ -4,6 +4,18 @@ RSpec.describe OpenWeatherMapService do
   context 'class methods' do
     context '.get_forecast returns a hash of weather data' do
       it 'has current weather' do
+        query_params = {
+          lat: 39.738453,
+          lon: -104.984853,
+          appid: ENV['open_weather_map_key'], 
+          units: 'imperial'
+        }
+        denver_forecast_response = File.read('spec/fixtures/denver_forecast_response.json')
+
+        stub_request(:get, "https://api.openweathermap.org/data/2.5/onecall")
+          .with(query: query_params)
+          .to_return(status: 200, body: denver_forecast_response, headers: {})
+
         coordinates = { lat: 39.738453, lng: -104.984853 } 
         result = OpenWeatherMapService.get_forecast(coordinates)
 
