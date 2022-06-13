@@ -3,6 +3,10 @@ require 'rails_helper'
 RSpec.describe ForecastFacade do
   context 'class methods' do
     before :each do
+      books_response = File.read('spec/fixtures/books_response.json')
+      stub_request(:get, "http://openlibrary.org/search.json?q=denver,co")
+        .to_return(status: 200, body: books_response, headers: {})
+
       map_quest_params = {
         key: ENV['map_quest_key'],
         location: 'denver,co'
