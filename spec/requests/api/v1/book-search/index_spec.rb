@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Searching for books by location' do
   context 'happy path tests' do
     before :each do
-      get '/api/v1/book-search?location=denver,co&quantity = 5'
+      get '/api/v1/book-search?location=denver,co&quantity=5'
 
       @full_response = JSON.parse(response.body, symbolize_names: true) 
     end
@@ -78,17 +78,6 @@ RSpec.describe 'Searching for books by location' do
   end
 
   context 'sad path/edge case tests' do
-    it 'quantity must be > 0' do
-      get '/api/v1/book-search?location=denver,co&quantity=0'
-      full_response = JSON.parse(response.body, symbolize_names: true)
-
-      expect(response).to_not be_successful
-      expect(response).to have_http_status 400
-
-      expect(full_response).to have_key :error
-      expect(full_response[:error]).to eq 'quantity must be greater than 0'
-    end
-
     it 'quantity must be a whole number' do
       get '/api/v1/book-search?location=denver,co&quantity=not_a_number'
       full_response = JSON.parse(response.body, symbolize_names: true) 
