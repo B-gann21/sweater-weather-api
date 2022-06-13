@@ -7,13 +7,26 @@ RSpec.describe 'Searching for books by location' do
       stub_request(:get, "http://openlibrary.org/search.json?q=denver,co")
         .to_return(status: 200, body: books_response, headers: {})
 
+      map_quest_params = {
+        key: ENV['map_quest_key'],
+        location: 'denver,co'
+      }
       denver_data = File.read('spec/fixtures/map_quest_denver_response.json')
       stub_request(:get, "http://www.mapquestapi.com/geocoding/v1/address")
+        .with(query: map_quest_params)
         .to_return(status: 200, body: denver_data, headers: {})
 
+      open_weather_map_params = {
+        lat: 39.738453,
+        lon: -104.984853,
+        appid: ENV['open_weather_map_key'], 
+        units: 'imperial'
+      }
       denver_forecast_response = File.read('spec/fixtures/denver_forecast_response.json')
       stub_request(:get, "https://api.openweathermap.org/data/2.5/onecall")
+        .with(query: open_weather_map_params)
         .to_return(status: 200, body: denver_forecast_response, headers: {})
+
       get '/api/v1/book-search?location=denver,co&quantity=5'
 
       @full_response = JSON.parse(response.body, symbolize_names: true) 
@@ -75,7 +88,7 @@ RSpec.describe 'Searching for books by location' do
           expect(book).to have_key :isbn
           expect(book[:isbn]).to be_an Array
           expect(book[:isbn]).to be_all String
-          expect(cook[:isbn].count).to eq 2
+          expect(book[:isbn].count).to eq 2
 
           expect(book).to have_key :title
           expect(book[:title]).to be_a String
