@@ -117,7 +117,59 @@ RSpec.describe 'Searching for a forecast by city' do
     end
 
     context 'daily_weather' do
-      it 'should have daily weather as a hash'
+      it 'has daily weather array' do
+        expect(@full_response[:data][:attributes]).to have_key :daily_weather
+        expect(@full_response[:data][:attributes][:daily_weather]).to be_an Array
+        expect(@full_response[:data][:attributes][:daily_weather]).to be_all Hash
+      end
+
+      before { @daily_weather = @full_response[:data][:attributes][:daily_weather][0] }
+
+      it 'has the date, sunrise, and sunset in readable format' do
+        expect(@daily_weather).to have_key :date
+        expect(@daily_weather[:date]).to be_a String
+        expect(Time.parse(@daily_weather[:date])).to be_an_instance_of Time
+
+        expect(@daily_weather).to have_key :sunrise
+        expect(@daily_weather[:sunrise]).to be_a String
+        expect(Time.parse(@daily_weather[:sunrise])).to be_an_instance_of Time
+
+        expect(@daily_weather).to have_key :sunset
+        expect(@daily_weather[:sunset]).to be_a String
+        expect(Time.parse(@daily_weather[:sunset])).to be_an_instance_of Time
+      end
+
+      it 'has max_temp and min_temp as floats' do
+        expect(@daily_weather).to have_key :max_temp
+        expect(@daily_weather[:max_temp]).to be_a Float
+
+        expect(@daily_weather).to have_key :min_temp
+        expect(@daily_weather[:min_temp]).to be_a Float
+      end
+
+      it 'has conditions and icon as strings' do
+        expect(@daily_weather).to have_key :conditions
+        expect(@daily_weather[:conditions]).to be_a String
+
+        expect(@daily_weather).to have_key :icon
+        expect(@daily_weather[:icon]).to be_a String
+      end
+    end
+
+    context 'hourly weather' do
+      it 'has an hourly weather hash' do
+        expect(@full_response[:data][:attributes]).to have_key :hourly_weather
+        expect(@full_response[:data][:attributes][:hourly_weather]).to be_an Array
+      end
+
+      before { @hourly_weather = @full_response[:data][:attributes][:hourly_weather][0] }
+
+      it 'has the time in redable format' do
+        expect(@hourly_weather).to have_key :time
+        expect(@hourly_weather[:time]).to be_a String
+
+        expect(Time.parse(@hourly_weather[:time])).to be_an_instance_of Time
+      end
     end
   end
 end
