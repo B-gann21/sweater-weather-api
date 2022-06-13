@@ -5,6 +5,7 @@ class BookSearchFacade
     weather_data = OpenWeatherMapService.get_forecast(coordinates)[:current]
 
     weatherBooks = {}
+    weatherBooks[:total_books] = books_data[:numFound]
     weatherBooks[:weather] = Weather.new(weather_data)
     weatherBooks[:books] = books_data[:docs][0..limit.to_i - 1].map { |book_data| Book.new(book_data) }
     weatherBooks

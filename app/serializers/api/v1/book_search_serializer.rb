@@ -1,5 +1,5 @@
 class Api::V1::BookSearchSerializer
-  def self.weather_and_books(destination, weather, books)
+  def self.weather_and_books(destination, weather, books, total_books)
     {
       data: {
         id: nil, 
@@ -11,6 +11,7 @@ class Api::V1::BookSearchSerializer
             temperature: weather.temperature,
           },
 
+          total_books_found: total_books,
           books: books.map do |book|
             {
               isbn: book.isbn,
