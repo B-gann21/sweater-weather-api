@@ -28,32 +28,31 @@ RSpec.describe HourlyForecast do
   end
 
   it 'can be initialized with a hash' do
-    forecast = HourlyForecast.new(@current_weather_response)
+    forecast = HourlyForecast.new(@hourly_weather_response)
     expect(forecast).to be_a HourlyForecast
   end
 
-    it 'has readable attributes' do
-      forecast = HourlyForecast.new(@current_weather_response)
+  it 'has readable attributes' do
+    forecast = HourlyForecast.new(@hourly_weather_response)
 
-      expect(forecast.datetime).to be_an_instance_of Time
-      expect(forecast.temperature).to be_a Float
-      expect(forecast.conditions).to be_a String
-      expect(forecast.icon).to be_a String
+    expect(forecast.datetime).to be_an_instance_of Time
+    expect(forecast.temperature).to be_a Float
+    expect(forecast.conditions).to be_a String
+    expect(forecast.icon).to be_a String
 
-      expect(forecast).to_not respond_to :feels_like
-      expect(forecast).to_not respond_to :uvi
-      expect(forecast).to_not respond_to :visibility
-      expect(forecast).to_not respond_to :description
-      expect(forecast).to_not respond_to :pop
-      expect(forecast).to_not respond_to :pressure
-      expect(forecast).to_not respond_to :humidity
-      expect(forecast).to_not respond_to :dew_point
-      expect(forecast).to_not respond_to :clouds
-      expect(forecast).to_not respond_to :wind_speed
-      expect(forecast).to_not respond_to :wind_deg
-      expect(forecast).to_not respond_to :wind_gust
-      expect(forecast).to_not respond_to :id
-      expect(forecast).to_not respond_to :main
-    end
+    expect(forecast).to_not respond_to :feels_like
+    expect(forecast).to_not respond_to :uvi
+    expect(forecast).to_not respond_to :visibility
+    expect(forecast).to_not respond_to :description
+    expect(forecast).to_not respond_to :pop
+    expect(forecast).to_not respond_to :pressure
+    expect(forecast).to_not respond_to :humidity
+    expect(forecast).to_not respond_to :dew_point
+    expect(forecast).to_not respond_to :clouds
+    expect(forecast).to_not respond_to :wind_speed
+    expect(forecast).to_not respond_to :wind_deg
+    expect(forecast).to_not respond_to :wind_gust
+    expect(forecast).to_not respond_to :id
+    expect(forecast).to_not respond_to :main
   end
 end
