@@ -31,7 +31,7 @@ RSpec.describe CurrentForecast do
 
     it 'can be initialized with a hash' do
       forecast = CurrentForecast.new(@current_weather_response)
-      expect(forecast).to be_a Forecast
+      expect(forecast).to be_a CurrentForecast
     end
 
     it 'has readable attributes' do
