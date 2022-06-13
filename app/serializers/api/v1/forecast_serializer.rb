@@ -16,8 +16,28 @@ class Api::V1::ForecastSerializer
             visibility: forecast.current_forecast.visibility,
             conditions: forecast.current_forecast.conditions,
             icon: forecast.current_forecast.icon,
-          }
+          },
 
+          daily_weather: forecast.daily_forecasts.map do |forecast|
+            {
+              date: forecast.date,
+              sunrise: forecast.sunrise,
+              sunset: forecast.sunset,
+              max_temp: forecast.max_temp,
+              min_temp: forecast.min_temp,
+              conditions: forecast.conditions,
+              icon: forecast.icon,
+            }
+          end,
+
+          hourly_weather: forecast.hourly_forecasts.map do |forecast|
+            {
+              time: forecast.datetime,
+              temperature: forecast.temperature,
+              conditions: forecast.conditions,
+              icon: forecast.icon,
+            }
+          end
         }
       }
     }
