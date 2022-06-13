@@ -1,0 +1,23 @@
+{
+	"dt": 1655089200,
+	"temp": 77.81,
+	"feels_like": 76.84,
+	"pressure": 1000,
+	"humidity": 33,
+	"dew_point": 46.44,
+	"uvi": 0,
+	"clouds": 92,
+	"visibility": 10000,
+	"wind_speed": 6.85,
+	"wind_deg": 217,
+	"wind_gust": 11.43,
+	"weather": [
+		{
+			"id": 804,
+			"main": "Clouds",
+			"description": "overcast clouds",
+			"icon": "04n"
+		}
+	],
+	"pop": 0
+}

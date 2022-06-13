@@ -2,11 +2,31 @@ require 'rails_helper'
 
 RSpec.describe ForecastFacade do
   context 'class methods' do
-    it '.city_coordinates returns a hash of latitude and longitude' do
+    before :each do
+      map_quest_params = {
+        key: ENV['map_quest_key'],
+        location: 'denver,co'
+      }
       denver_data = File.read('spec/fixtures/map_quest_denver_response.json')
-      stub_request(:get, "http://www.mapquestapi.com/geocoding/v1/address?key=#{ENV['map_quest_key']}&location=denver,co")
+
+      stub_request(:get, "http://www.mapquestapi.com/geocoding/v1/address")
+        .with(query: map_quest_params)
         .to_return(status: 200, body: denver_data, headers: {})
 
+      open_weather_map_params = {
+        lat: 39.738453,
+        lon: -104.984853,
+        appid: ENV['open_weather_map_key'], 
+        units: 'imperial'
+      }
+      denver_forecast_response = File.read('spec/fixtures/denver_forecast_response.json')
+
+      stub_request(:get, "https://api.openweathermap.org/data/2.5/onecall")
+        .with(query: open_weather_map_params)
+        .to_return(status: 200, body: denver_forecast_response, headers: {})
+    end
+
+    it '.city_coordinates returns a hash of latitude and longitude' do
       coordinates = ForecastFacade.city_coordinates('denver,co')
 
       expect(coordinates).to be_a Hash

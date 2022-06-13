@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe OpenWeatherMapService do
   context 'class methods' do
     context '.get_forecast returns a hash of weather data' do
-      it 'has current weather' do
+      before :each do
         query_params = {
           lat: 39.738453,
           lon: -104.984853,
@@ -17,46 +17,73 @@ RSpec.describe OpenWeatherMapService do
           .to_return(status: 200, body: denver_forecast_response, headers: {})
 
         coordinates = { lat: 39.738453, lng: -104.984853 } 
-        result = OpenWeatherMapService.get_forecast(coordinates)
+        @result = OpenWeatherMapService.get_forecast(coordinates)
+      end
 
-        expect(result).to be_a Hash
-        expect(result).to have_key :current
-        expect(result[:current]).to be_a Hash
+      it 'has current weather' do
+        expect(@result).to be_a Hash
+        expect(@result).to have_key :current
+        expect(@result[:current]).to be_a Hash
 
-        expect(result[:current]).to have_key :dt
-        expect(result[:current][:dt]).to be_an Integer
+        expect(@result[:current]).to have_key :dt
+        expect(@result[:current][:dt]).to be_an Integer
 
-        expect(result[:current]).to have_key :sunrise
-        expect(result[:current][:sunrise]).to be_an Integer
+        expect(@result[:current]).to have_key :sunrise
+        expect(@result[:current][:sunrise]).to be_an Integer
 
-        expect(result[:current]).to have_key :temp
-        expect(result[:current][:temp]).to be_a Float
+        expect(@result[:current]).to have_key :temp
+        expect(@result[:current][:temp]).to be_a Float
 
-        expect(result[:current]).to have_key :feels_like
-        expect(result[:current][:feels_like]).to be_a Float
+        expect(@result[:current]).to have_key :feels_like
+        expect(@result[:current][:feels_like]).to be_a Float
 
-        expect(result[:current]).to have_key :humidity
-        expect(result[:current][:humidity]).to be_an Integer
+        expect(@result[:current]).to have_key :humidity
+        expect(@result[:current][:humidity]).to be_an Integer
 
-        expect(result[:current]).to have_key :uvi
-        expect(result[:current][:uvi]).to be_an Integer
+        expect(@result[:current]).to have_key :uvi
+        expect(@result[:current][:uvi]).to be_an Integer
 
-        expect(result[:current]).to have_key :visibility
-        expect(result[:current][:visibility]).to be_an Integer
+        expect(@result[:current]).to have_key :visibility
+        expect(@result[:current][:visibility]).to be_an Integer
 
-        expect(result[:current]).to have_key :weather
-        expect(result[:current][:weather]).to be_an Array
+        expect(@result[:current]).to have_key :weather
+        expect(@result[:current][:weather]).to be_an Array
 
-        expect(result[:current][:weather][0]).to be_a Hash
-        expect(result[:current][:weather][0]).to have_key :description
-        expect(result[:current][:weather][0][:description]).to be_a String
+        expect(@result[:current][:weather][0]).to be_a Hash
+        expect(@result[:current][:weather][0]).to have_key :description
+        expect(@result[:current][:weather][0][:description]).to be_a String
 
-        expect(result[:current][:weather][0]).to have_key :icon
-        expect(result[:current][:weather][0][:icon]).to be_a String
+        expect(@result[:current][:weather][0]).to have_key :icon
+        expect(@result[:current][:weather][0][:icon]).to be_a String
       end
 
       it 'has daily weather'
-      it 'hourly weather'
+
+      it 'has hourly weather' do
+        expect(@result).to have_key :hourly
+        expect(@result[:hourly]).to be_an Array
+
+        @result[:hourly].each do |forecast|
+          expect(forecast).to have_key :dt
+          expect(forecast[:dt]).to be_an Integer
+
+          expect(forecast).to have_key :temp
+          expect(forecast[:temp]).to be_a Float
+
+          expect(forecast).to have_key :feels_like
+          expect(forecast[:feels_like]).to be_a Float
+
+          expect(forecast).to have_key :weather
+          expect(forecast[:weather]).to be_an Array
+
+          expect(forecast[:weather][0]).to be_a Hash
+          expect(forecast[:weather][0]).to have_key :description
+          expect(forecast[:weather][0][:description]).to be_a String
+
+          expect(forecast[:weather][0]).to have_key :icon
+          expect(forecast[:weather][0][:icon]).to be_a String
+        end
+      end
     end
   end
 end
