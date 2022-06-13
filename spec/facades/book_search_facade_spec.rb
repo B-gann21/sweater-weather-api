@@ -40,6 +40,9 @@ RSpec.describe BookSearchFacade do
 
       expect(result).to have_key :weather
       expect(result[:weather]).to be_a Weather
+
+      expect(result).to have_key :total_books
+      expect(result[:total_books]).to be_an Integer
     end
   end
 end
