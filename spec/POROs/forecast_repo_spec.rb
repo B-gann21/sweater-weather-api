@@ -2,19 +2,30 @@ require 'rails_helper'
 
 RSpec.describe ForecastRepo do
   before :each do
-    allow_any_instance_of(CurrentForecast).to receive(:new).and_return(CurrentForecast)
-    allow_any_instance_of(HourlyForecast).to receive(:new).and_return(HourlyForecast)
-    allow_any_instance_of(DailyForecast).to recieve(:new).and_return(DailyForecast)
+    allow_any_instance_of(CurrentForecast)
+      .to receive(:initialize)
+      .with({})
+      .and_return(an_instance_of(CurrentForecast))
+
+    allow_any_instance_of(HourlyForecast)
+      .to receive(:initialize)
+      .with({})
+      .and_return(an_instance_of(HourlyForecast))
+
+    allow_any_instance_of(DailyForecast)
+      .to receive(:initialize)
+      .with({})
+      .and_return(an_instance_of(DailyForecast))
 
     @forecast_repo_data = {
-      current_weather: CurrentWeather.new,
+      current_weather: CurrentForecast.new({}),
       hourly_forecasts: [],
       daily_forecasts: []
     }
 
     8.times do
-      @forecast_repo_data[:hourly_forecasts] << HourlyForecast.new
-      @forecast_repo_data[:daily_forecasts] << DailyForecast.new
+      @forecast_repo_data[:hourly_forecasts] << HourlyForecast.new({})
+      @forecast_repo_data[:daily_forecasts] << DailyForecast.new({})
     end
   end
 
