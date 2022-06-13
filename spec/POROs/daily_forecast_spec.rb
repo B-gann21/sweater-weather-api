@@ -5,7 +5,7 @@ RSpec.describe DailyForecast do
     @daily_weather_response = {
       dt: 1655056800,
       sunrise: 1655033490,
-      unset: 1655087299,
+      sunset: 1655087299,
       moonrise: 1655081220,
       moonset: 1655027520,
       moon_phase: 0.43,
@@ -32,7 +32,7 @@ RSpec.describe DailyForecast do
       weather: [
         {
           id: 804,
-          main: Clouds,
+          main: "Clouds",
           description: "overcast clouds",
           icon: "04d"
         }
@@ -46,13 +46,13 @@ RSpec.describe DailyForecast do
   it 'can be initialized with a hash' do
     forecast = DailyForecast.new(@daily_weather_response)
 
-    expect(forecast).to be_a Forecast
+    expect(forecast).to be_a DailyForecast
   end
 
   it 'has readable attributes' do
     forecast = DailyForecast.new(@daily_weather_response)
 
-    expect(forecast.date).to eq '6/12/22' 
+    expect(forecast.date).to eq '06/12/22' 
     expect(forecast.sunrise).to be_a Time
     expect(forecast.sunset).to be_a Time
     expect(forecast.max_temp).to eq 92.91
