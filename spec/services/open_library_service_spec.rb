@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe OpenLibraryService do
-  contect 'class methods' do
+  context 'class methods' do
     it '.get_book returns books with a given location in the title' do
       result = OpenLibraryService.get_books('denver,co')
       expect(result).to be_a Hash
