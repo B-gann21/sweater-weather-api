@@ -11,7 +11,6 @@ class Api::V1::BookSearchSerializer
             temperature: weather.temperature,
           },
 
-          total_books_found: books.first.total_books_found,
           books: books.map do |book|
             {
               isbn: book.isbn,
