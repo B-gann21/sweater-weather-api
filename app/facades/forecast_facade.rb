@@ -1,5 +1,6 @@
 class ForecastFacade
   def self.full_forecast(city)
+    Rails.cache.fetch("#{city}-query") do
       raw_data = OpenWeatherMapService.get_forecast(city_coordinates(city))
 
       forecast_hash = {}
@@ -8,6 +9,7 @@ class ForecastFacade
       forecast_hash[:daily_forecasts] = daily_forecasts(city)
 
       ForecastRepo.new(forecast_hash)
+    end
   end
 
   def self.hourly_forecast(city)
