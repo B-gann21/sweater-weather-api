@@ -50,7 +50,13 @@ RSpec.describe ForecastFacade do
       expect(forecast).to be_a CurrentForecast
     end
 
-    it '.daily_forecast returns an array of DailyForecast objects'
+    it '.daily_forecast returns an array of DailyForecast objects' do
+      forecasts = ForecastFacade.daily_forecasts('denver,co')
+
+      expect(forecasts).to be_an Array
+      expect(forecasts).to be_all DailyForecast
+    end
+    
     it '.full_forecast returns a ForecastRepo object'
   end
 end

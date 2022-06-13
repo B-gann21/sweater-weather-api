@@ -11,6 +11,12 @@ class ForecastFacade
     CurrentForecast.new(raw_forecast_data[:current])
   end
 
+  def self.daily_forecasts(city)
+    raw_forecast_data = OpenWeatherMapService.get_forecast(city_coordinates(city))
+
+    raw_forecast_data[:daily].map { |daily_data| DailyForecast.new(daily_data) }
+  end
+
   def self.city_coordinates(city)
     MapQuestService.get_city_info(city)[:results][0][:locations][0][:latLng]
   end
