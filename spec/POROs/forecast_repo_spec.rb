@@ -18,7 +18,7 @@ RSpec.describe ForecastRepo do
       .and_return(an_instance_of(DailyForecast))
 
     @forecast_repo_data = {
-      current_weather: CurrentForecast.new({}),
+      current_forecast: CurrentForecast.new({}),
       hourly_forecasts: [],
       daily_forecasts: []
     }

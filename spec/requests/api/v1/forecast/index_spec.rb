@@ -3,6 +3,27 @@ require 'rails_helper'
 RSpec.describe 'Searching for a forecast by city' do
   context 'happy path tests' do
     before :each do
+      map_quest_params = {
+        key: ENV['map_quest_key'],
+        location: 'denver,co'
+      }
+      denver_data = File.read('spec/fixtures/map_quest_denver_response.json')
+
+      stub_request(:get, "http://www.mapquestapi.com/geocoding/v1/address")
+        .with(query: map_quest_params)
+        .to_return(status: 200, body: denver_data, headers: {})
+
+      open_weather_map_params = {
+        lat: 39.738453,
+        lon: -104.984853,
+        appid: ENV['open_weather_map_key'], 
+        units: 'imperial'
+      }
+      denver_forecast_response = File.read('spec/fixtures/denver_forecast_response.json')
+
+      stub_request(:get, "https://api.openweathermap.org/data/2.5/onecall")
+        .with(query: open_weather_map_params)
+        .to_return(status: 200, body: denver_forecast_response, headers: {})
       get '/api/v1/forecast?location=denver,co'
 
       @full_response = JSON.parse(response.body, symbolize_names: true) 
@@ -43,7 +64,6 @@ RSpec.describe 'Searching for a forecast by city' do
         parsed_time = Time.parse(actual_time)
 
         expect(parsed_time).to be_an_instance_of Time
-        expect(Time.at(actual_time)).to raise_error(TypeError)
       end
 
       it 'has the sunrise time in readable format (not unix)' do
@@ -54,7 +74,6 @@ RSpec.describe 'Searching for a forecast by city' do
         parsed_time = Time.parse(actual_sunrise)
 
         expect(parsed_time).to be_an_instance_of Time
-        expect(Time.at(actual_time)).to raise_error(TypeError)
       end
 
       it 'has the sunset time in readable format (not unix)' do
@@ -65,7 +84,6 @@ RSpec.describe 'Searching for a forecast by city' do
         parsed_time = Time.parse(actual_sunset)
 
         expect(parsed_time).to be_an_instance_of Time
-        expect(Time.at(actual_time)).to raise_error(TypeError)
       end
 
       it 'has the current temp and feels like temp as floats' do
@@ -80,13 +98,13 @@ RSpec.describe 'Searching for a forecast by city' do
         classes = [Float, Integer]
 
         expect(@current_weather).to have_key :humidity
-        expect(classes).to include(@current_weather[:humidity])
+        expect(classes).to include(@current_weather[:humidity].class)
 
         expect(@current_weather).to have_key :uvi
-        expect(classes).to include(@current_weather[:uvi])
+        expect(classes).to include(@current_weather[:uvi].class)
 
         expect(@current_weather).to have_key :visibility
-        expect(classes).to include(@current_weather[:visibility])
+        expect(classes).to include(@current_weather[:visibility].class)
       end
 
       it 'has conditions and icon strings' do

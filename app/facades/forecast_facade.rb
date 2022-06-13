@@ -1,20 +1,31 @@
 class ForecastFacade
-  def self.hourly_forecast(city)
-    raw_forecast_data = OpenWeatherMapService.get_forecast(city_coordinates(city))
+  def self.full_forecast(city)
+      raw_data = OpenWeatherMapService.get_forecast(city_coordinates(city))
 
-    raw_forecast_data[:hourly].map { |hourly_data| HourlyForecast.new(hourly_data) }
+      forecast_hash = {}
+      forecast_hash[:current_forecast] = current_forecast(city)
+      forecast_hash[:hourly_forecasts] = hourly_forecast(city)
+      forecast_hash[:daily_forecasts] = daily_forecasts(city)
+
+      ForecastRepo.new(forecast_hash)
+  end
+
+  def self.hourly_forecast(city)
+    raw_data = OpenWeatherMapService.get_forecast(city_coordinates(city))
+
+    raw_data[:hourly].map { |hourly_data| HourlyForecast.new(hourly_data) }
   end
 
   def self.current_forecast(city)
-    raw_forecast_data = OpenWeatherMapService.get_forecast(city_coordinates(city))
+    raw_data = OpenWeatherMapService.get_forecast(city_coordinates(city))
 
-    CurrentForecast.new(raw_forecast_data[:current])
+    CurrentForecast.new(raw_data[:current])
   end
 
   def self.daily_forecasts(city)
-    raw_forecast_data = OpenWeatherMapService.get_forecast(city_coordinates(city))
+    raw_data = OpenWeatherMapService.get_forecast(city_coordinates(city))
 
-    raw_forecast_data[:daily].map { |daily_data| DailyForecast.new(daily_data) }
+    raw_data[:daily].map { |daily_data| DailyForecast.new(daily_data) }
   end
 
   def self.city_coordinates(city)
