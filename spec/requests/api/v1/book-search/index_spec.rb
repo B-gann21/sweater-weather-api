@@ -41,6 +41,7 @@ RSpec.describe 'Searching for books by location' do
       expect(attributes).to have_key :books
       expect(attributes[:books]).to be_an Array
       expect(attributes[:books]).to be_all Hash
+      expect(attributes[:books].count).to eq 5
     end
 
     before { @attributes = @full_response[:data][:attributes] }
