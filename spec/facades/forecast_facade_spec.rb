@@ -57,6 +57,10 @@ RSpec.describe ForecastFacade do
       expect(forecasts).to be_all DailyForecast
     end
     
-    it '.full_forecast returns a ForecastRepo object'
+    it '.full_forecast returns a ForecastRepo object' do
+      forecast = ForecastFacade.full_forecast('denver,co')
+
+      expect(forecast).to be_a ForecastRepo
+    end
   end
 end
