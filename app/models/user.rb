@@ -14,6 +14,10 @@ class User < ApplicationRecord
     user
   end
 
+  def self.valid_key?(key)
+    pluck(:api_key).include? key
+  end
+
   def valid_and_confirmed_password?
     valid? && (password == password_confirmation)
   end
