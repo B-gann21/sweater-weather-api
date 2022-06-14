@@ -27,5 +27,20 @@ RSpec.describe MapQuestService do
       expect(city_data[:latLng]).to have_key :lng
       expect(city_data[:latLng][:lng]).to be_a Float
     end
+
+    it '.get_directions returns a hash of directions' do
+      result = MapQuestService.get_directions('Denver,CO', 'Pueblo,CO')
+      expect(result).to be_a Hash
+
+      expect(result).to have_key :route
+      expect(result[:route]).to be_a Hash
+
+      expect(result[:route]).to have_key :formattedTime
+      expect(result[:route][:formatted_time]).to be_a String
+
+      expect(result[:route]).to have_key :legs
+      expect(result[:route][:legs]).to be_an Array
+      expect(result[:route][:legs]).to be_all Hash
+    end
   end
 end
