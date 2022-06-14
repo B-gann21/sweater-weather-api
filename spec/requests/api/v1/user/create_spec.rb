@@ -95,7 +95,7 @@ RSpec.describe 'Registering a User' do
 
     it 'email can not be missing' do
       body = {
-        email: nil,
+        email: '',
         password: 'cool password',
         password_confirmation: 'cool password'
       }
@@ -112,7 +112,30 @@ RSpec.describe 'Registering a User' do
       full_response = JSON.parse(response.body, symbolize_names: true) 
 
       expect(full_response).to have_key :error
-      expect(full_response[:error]).to eq 'email can not be missing'
+      expect(full_response[:error]).to eq 'invalid email'
+    end
+
+    it 'email must be unique' do
+      User.create!(email: '123@gmail.com', password_digest: 'fo042i860', api_key: 'foaeir3252')
+      body = {
+        email: '123@gmail.com',
+        password: 'cool password',
+        password_confirmation: 'cool password'
+      }
+
+      headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+
+      post '/api/v1/users', headers: headers, params: JSON.generate(body)
+
+      expect(response).to_not be_successful
+      expect(response).to have_http_status 400
+      full_response = JSON.parse(response.body, symbolize_names: true) 
+
+      expect(full_response).to have_key :error
+      expect(full_response[:error]).to eq 'invalid email'
     end
 
     context 'passwords must match' do

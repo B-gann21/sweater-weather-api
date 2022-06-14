@@ -7,7 +7,7 @@ class Api::V1::UsersController < ApplicationController
     if user.valid_and_confirmed_password?
       render json: Api::V1::UserSerializer.user_show(user), status: 201
     else
-      render json: Api::V1::UserErrorSerializer.bad_request(user)
+      render json: Api::V1::UserErrorSerializer.bad_create_request(user), status: 400
     end
   end
 
