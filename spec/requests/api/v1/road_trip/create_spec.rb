@@ -111,11 +111,6 @@ RSpec.describe 'The Roadtrip endpoint' do
         .with(query: directions_query)
         .to_return(status:200, body: denver_to_london_response, headers:{})
 
-      User.create!(email: '123@gmail.com',
-                   password: '12345',
-                   password_confirmation: '12345',
-                   api_key: '54321')
-
       body = {
         origin: 'Denver,CO',
         destination: 'London,UK',
@@ -151,9 +146,9 @@ RSpec.describe 'The Roadtrip endpoint' do
       expect(attributes).to have_key :travel_time
       expect(attributes[:travel_time]).to eq 'impossible'
 
-      expect(attributes).to have_key :weather
-      expect(attributes[:weather]).to be_a Hash
-      expect(attributes[:weather]).to be_empty
+      expect(attributes).to have_key :weather_at_eta
+      expect(attributes[:weather_at_eta]).to be_a Hash
+      expect(attributes[:weather_at_eta]).to be_empty
     end
   end
 
