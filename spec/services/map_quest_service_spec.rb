@@ -27,5 +27,30 @@ RSpec.describe MapQuestService do
       expect(city_data[:latLng]).to have_key :lng
       expect(city_data[:latLng][:lng]).to be_a Float
     end
+
+    it '.get_directions returns a hash of directions' do
+      directions_query = {
+        key: ENV['map_quest_key'],
+        from: 'Denver,CO',
+        to: 'Pueblo,CO'
+      }
+      pueblo_to_denver_response = File.read('spec/fixtures/pueblo_to_denver_response.json')
+      stub_request(:get, "http://www.mapquestapi.com/directions/v2/route")
+        .with(query: directions_query)
+        .to_return(status:200, body: pueblo_to_denver_response, headers:{})
+
+      result = MapQuestService.get_directions('Denver,CO', 'Pueblo,CO')
+      expect(result).to be_a Hash
+
+      expect(result).to have_key :route
+      expect(result[:route]).to be_a Hash
+
+      expect(result[:route]).to have_key :formattedTime
+      expect(result[:route][:formattedTime]).to be_a String
+
+      expect(result[:route]).to have_key :legs
+      expect(result[:route][:legs]).to be_an Array
+      expect(result[:route][:legs]).to be_all Hash
+    end
   end
 end

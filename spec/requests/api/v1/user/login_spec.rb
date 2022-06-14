@@ -5,7 +5,6 @@ RSpec.describe 'Logging in a User' do
     before :each do
       User.create!(email: '123@gmail.com',
                    password: 'cool password',
-                   password_confirmation: 'cool password',
                    api_key: '12345')
 
       body = {
