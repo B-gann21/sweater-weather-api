@@ -24,7 +24,7 @@ RSpec.describe 'Registering a User' do
       expect(response).to have_http_status 201
     end
 
-    it 'has user info in a data hash' do
+    it 'has the user info in a hash' do
       expect(@full_response).to have_key :data
       expect(@full_response[:data]).to be_a Hash
       user_data = @full_response[:data]
