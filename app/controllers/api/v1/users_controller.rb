@@ -14,7 +14,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def validate_api_key
-    if !User.pluck(:api_key).include? @body[:api_key]
+    if !User.valid_key?(@body[:api_key])
       bad_credentials
     end
   end
