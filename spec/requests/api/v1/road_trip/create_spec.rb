@@ -99,5 +99,87 @@ RSpec.describe 'The Roadtrip endpoint' do
       expect(weather).to have_key :conditions
       expect(weather[:conditions]).to be_a String
     end
+
+    it 'impossible travel time results in empty weather response' do
+      directions_query = {
+        key: ENV['map_quest_key'],
+        from: 'Denver,CO',
+        to: 'London,UK'
+      }
+      denver_to_london_response = File.read('spec/fixtures/denver_to_london_response.json')
+      stub_request(:get, "http://www.mapquestapi.com/directions/v2/route")
+        .with(query: directions_query)
+        .to_return(status:200, body: denver_to_london_response, headers:{})
+
+      User.create!(email: '123@gmail.com',
+                   password: '12345',
+                   password_confirmation: '12345',
+                   api_key: '54321')
+
+      body = {
+        origin: 'Denver,CO',
+        destination: 'London,UK',
+        api_key: '54321'
+      }
+
+      headers = { 'CONTENT_TYPE': 'application/json' }
+
+      post '/api/v1/road_trip', headers: headers, params: JSON.generate(body)
+      
+      expect(response).to be_successful
+      expect(response).to have_http_status 200
+      full_response = JSON.parse(response.body, symbolize_names: true) 
+
+      expect(full_response).to have_key :data
+      expect(full_response[:data]).to be_a Hash
+
+      expect(full_response[:data]).to have_key :id
+      expect(full_response[:data][:id]).to be_nil
+      expect(full_response[:data]).to have_key :type
+      expect(full_response[:data][:type]).to eq 'roadtrip'
+
+      expect(full_response[:data]).to have_key :attributes
+      expect(full_response[:data][:attributes]).to be_a Hash
+      attributes = full_response[:data][:attributes]
+
+      expect(attributes).to have_key :start_city
+      expect(attributes[:start_city]).to eq('Denver,CO')
+
+      expect(attributes).to have_key :end_city
+      expect(attributes[:end_city]).to eq('London,UK')
+
+      expect(attributes).to have_key :travel_time
+      expect(attributes[:travel_time]).to eq 'impossible'
+
+      expect(attributes).to have_key :weather
+      expect(attributes[:weather]).to be_a Hash
+      expect(attributes[:weather]).to be_empty
+    end
+  end
+
+  context 'sad path tests' do
+    it 'wrong api key sends an error' do
+      User.create!(email: '123@gmail.com',
+                   password: '12345',
+                   password_confirmation: '12345',
+                   api_key: '54321')
+
+      body = {
+        origin: 'Denver,CO',
+        destination: 'Pueblo,CO',
+        api_key: '12345'
+      }
+
+      headers = { 'CONTENT_TYPE': 'application/json' }
+
+      post '/api/v1/road_trip', headers: headers, params: JSON.generate(body)
+
+      expect(response).to_not be_successful
+      expect(response).to have_http_status 401
+
+      full_response = JSON.parse(response.body, symbolize_names: true) 
+      expect(full_response).to have_key :error
+      expect(full_response[:error]).to eq 'bad credentials'
+    end
   end
 end
