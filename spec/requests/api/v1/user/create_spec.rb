@@ -44,6 +44,11 @@ RSpec.describe 'Registering a User' do
 
       expect(attributes).to have_key :api_key
       expect(attributes[:api_key]).to be_a String
+
+      expect(attributes).to_not have_key :password_digest
+      expect(attributes).to_not have_key :password
+      expect(user_data).to_not have_key :password_digest
+      expect(user_data).to_not have_key :password
     end
   end
 
