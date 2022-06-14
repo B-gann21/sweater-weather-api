@@ -93,14 +93,14 @@ RSpec.describe 'Registering a User' do
         email: nil,
         password: 'cool password',
         password_confirmation: 'cool password'
-      }.to_json
+      }
 
       headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       }
 
-      post '/api/v1/users', headers: headers, params: body, as: :json
+      post '/api/v1/users', headers: headers, params: JSON.generate(body)
 
       expect(response).to_not be_successful
       expect(response).to have_http_status 400
@@ -116,14 +116,14 @@ RSpec.describe 'Registering a User' do
           email: 'cool_email@gmail.com',
           password: 'cool password',
           password_confirmation: 'cool_password'
-        }.to_json
+        }
 
         headers = {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         }
 
-        post '/api/v1/users', headers: headers, params: body, as: :json
+        post '/api/v1/users', headers: headers, params: JSON.generate(body)
 
         expect(response).to_not be_successful
         expect(response).to have_http_status 400
@@ -138,14 +138,14 @@ RSpec.describe 'Registering a User' do
           email: 'cool_email@gmail.com',
           password: '',
           password_confirmation: 'cool_password'
-        }.to_json
+        }
 
         headers = {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         }
 
-        post '/api/v1/users', headers: headers, params: body, as: :json
+        post '/api/v1/users', headers: headers, params: JSON.generate(body)
 
         expect(response).to_not be_successful
         expect(response).to have_http_status 400
@@ -160,14 +160,14 @@ RSpec.describe 'Registering a User' do
           email: 'cool_email@gmail.com',
           password: 'cool password',
           password_confirmation: ''
-        }.to_json
+        }
 
         headers = {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         }
 
-        post '/api/v1/users', headers: headers, params: body, as: :json
+        post '/api/v1/users', headers: headers, params: JSON.generate(body)
 
         expect(response).to_not be_successful
         expect(response).to have_http_status 400

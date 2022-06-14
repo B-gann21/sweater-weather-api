@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :validate_headers
+  before_action :validate_content_type
 
   def create
     user = User.build_from_request(request.body.read)
@@ -13,9 +13,9 @@ class Api::V1::UsersController < ApplicationController
 
   private
 
-  def validate_headers
+  def validate_content_type
     if request.headers['CONTENT_TYPE'] != 'application/json'
-      render json: { error: 'invalid content type' }
+      render json: { error: 'invalid content type' }, status: 400
     end
   end
 end
