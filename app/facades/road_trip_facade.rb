@@ -1,6 +1,6 @@
 class RoadTripFacade < ForecastFacade
   def self.build_road_trip(start_city, end_city)
-    travel_time = MapQuestService.get_directions(start_city, end_city)[:route][:formatted_time]
+    travel_time = MapQuestService.get_directions(start_city, end_city)[:route][:formattedTime]
     weather_at_arrival = hourly_forecast(end_city)[travel_time.to_i - 1]
     
     trip_hash = {}

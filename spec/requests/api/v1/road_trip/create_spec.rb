@@ -93,8 +93,8 @@ RSpec.describe 'The Roadtrip endpoint' do
       expect(rt_attributes[:weather_at_eta]).to be_a Hash
       weather = rt_attributes[:weather_at_eta]
 
-      expect(weather).to have_key :travel_time
-      expect(weather[:travel_time]).to be_a Float
+      expect(weather).to have_key :temperature
+      expect(weather[:temperature]).to be_a Float
 
       expect(weather).to have_key :conditions
       expect(weather[:conditions]).to be_a String
