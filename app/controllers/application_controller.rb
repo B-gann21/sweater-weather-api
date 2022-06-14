@@ -8,4 +8,8 @@ class ApplicationController < ActionController::API
       render json: { error: 'invalid content type' }, status: 400
     end
   end
+
+  def bad_credentials
+    render json: { error: 'bad credentials' }, status: 401
+  end
 end

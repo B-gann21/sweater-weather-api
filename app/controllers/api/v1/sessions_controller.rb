@@ -10,10 +10,4 @@ class Api::V1::SessionsController < ApplicationController
       bad_credentials
     end
   end
-
-  private
-
-  def bad_credentials
-    render json: { error: 'bad credentials' }, status: 401
-  end
 end

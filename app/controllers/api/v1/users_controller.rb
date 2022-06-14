@@ -12,4 +12,10 @@ class Api::V1::UsersController < ApplicationController
       render json: Api::V1::UserErrorSerializer.bad_create_request(user), status: 400
     end
   end
+
+  def validate_api_key
+    if !User.pluck(:api_key).include? @body[:api_key]
+      bad_credentials
+    end
+  end
 end
