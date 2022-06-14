@@ -54,6 +54,44 @@ RSpec.describe 'Logging in a User' do
   end
 
   context 'sad path tests' do
+    context 'content type must be application/json' do
+      it 'no headers returns an error' do
+        body = {
+          email: 'cool_email@gmail.com',
+          password: 'cool password',
+        }
+
+        post '/api/v1/sessions', headers: {}, params: body
+
+        expect(response).to_not be_successful
+        expect(response).to have_http_status 400
+        full_response = JSON.parse(response.body, symbolize_names: true) 
+
+        expect(full_response).to have_key :error
+        expect(full_response[:error]).to eq 'invalid content type'
+      end
+
+      it 'wrong headers returns an error' do
+        body = {
+          email: 'cool_email@gmail.com',
+          password: 'cool password',
+        }
+
+        headers = {
+          'Content-Type': 'something thats not application/json'
+        }
+
+        post '/api/v1/sessions', headers: headers, params: body
+
+        expect(response).to_not be_successful
+        expect(response).to have_http_status 400
+        full_response = JSON.parse(response.body, symbolize_names: true) 
+
+        expect(full_response).to have_key :error
+        expect(full_response[:error]).to eq 'invalid content type'
+      end
+    end
+
     before :each do
       User.create!(email: '123@gmail.com',
                    password: 'cool password',
