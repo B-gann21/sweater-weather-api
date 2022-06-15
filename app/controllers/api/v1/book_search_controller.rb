@@ -1,5 +1,5 @@
 class Api::V1::BookSearchController < ApplicationController
-  before_action { check_params(params) }
+  before_action :check_params 
 
   def index  
     result = BookSearchFacade.find_weather_and_books(params[:location], params[:quantity])
@@ -10,13 +10,5 @@ class Api::V1::BookSearchController < ApplicationController
                                                                   result[:books],
                                                                   result[:total_books]
                                                                 )
-  end
-
-  private
-
-  def check_params(params)
-    if !(/\A\d+\z/).match? params[:quantity]
-      render json: { error: 'quantity must be a whole number' }, status: 400
-    end
   end
 end
