@@ -7,15 +7,15 @@ class User < ApplicationRecord
 
   validates_presence_of :api_key
 
-  def self.build_from_request(body)
-    json = JSON.parse(body, symbolize_names: true) 
-    user = User.new(json)
-    user.api_key = SecureRandom.urlsafe_base64
-    user
-  end
+#  def self.build_from_request(body)
+#    json = JSON.parse(body, symbolize_names: true) 
+#    user = User.new(json)
+#    user.api_key = SecureRandom.urlsafe_base64
+#    user
+#  end
 
   def self.valid_key?(key)
-    pluck(:api_key).include? key
+    find_by(api_key: key)
   end
 
   def valid_and_confirmed_password?
