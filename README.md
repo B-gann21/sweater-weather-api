@@ -30,7 +30,7 @@ You will need to create an account with these 3 sources to have your own API key
 * assign the following `key: value` pairs inside of application.yml:
   * `map_quest_key: {your map quest api key}`
   * `open_weather_map_key: {your open weather map api key}`
-  * `unsplash_key: {your open weather map key}`
+  * `unsplash_key: {your unsplash api key}`
 * `rails db:{create,migrate}` to establish the database 
 *  `rails s` to boot up the server
 *  make some requests in Postman!
