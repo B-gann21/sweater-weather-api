@@ -2,10 +2,14 @@
 
 The RESTful Rails API to return weather forecasts, background image URLs, and road trip information based on a given location.
 
-*this project uses the [Unsplash](https://unsplash.com/documentation), [Open Weather Map (One Call Api 3.0)](https://openweathermap.org/api), and [MapQuest](https://developer.mapquest.com/documentation) APIs. 
+*This project uses the [Unsplash](https://unsplash.com/documentation), [Open Weather Map (One Call Api 3.0)](https://openweathermap.org/api), and [MapQuest](https://developer.mapquest.com/documentation) APIs. 
 You will need to create an account with these 3 sources to have your own API keys.*
 
-*note this project is not in production. It is only useable on localhost*
+*Note: Sweater Weather is not in production. It is only useable on localhost*
+
+## Contributing 
+
+* feel free to open up an issue with any suggested changes or extensions!
 
 ## Learning Goals
 
@@ -30,6 +34,10 @@ You will need to create an account with these 3 sources to have your own API key
 * `rails db:{create,migrate}` to establish the database 
 *  `rails s` to boot up the server
 *  make some requests in Postman!
+
+## Running the test suite
+* Sweater Weather uses [RSpec](https://rspec.info/documentation/) to test the code.
+* `bundle exec rspec` will run the full test suite
 
 ## Endpoints available from Sweater Weather
 
