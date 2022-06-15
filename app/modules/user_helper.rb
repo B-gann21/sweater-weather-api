@@ -1,4 +1,10 @@
 module UserHelper
+  def build_user_from_request
+    user = User.new(@body)
+    user.api_key = SecureRandom.urlsafe_base64
+    user
+  end
+
   def validate_api_key
     if !User.valid_key?(@body[:api_key])
       bad_credentials

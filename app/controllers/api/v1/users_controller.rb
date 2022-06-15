@@ -3,7 +3,7 @@ class Api::V1::UsersController < ApplicationController
   before_action :validate_content_type, :parse_json
 
   def create
-    user = User.build_from_request(request.body.read)
+    user = build_user_from_request
     validate_creation(user)
   end
 end

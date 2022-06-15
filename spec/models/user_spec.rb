@@ -12,18 +12,18 @@ RSpec.describe User do
   end
 
   context 'class methods' do
-    it '.build_from_request initializes a user from a JSON payload' do
-      payload = { 
-        email: '123@gmail.com', 
-        password: '12345', 
-        password_confirmation: '12345' 
-      }.to_json
-  
-      user = User.build_from_request(payload)
-      # is there a different way to test that the user has not yet been saved in the database?
-      expect(user).to be_a User
-      expect(user.id).to be_nil
-    end
+#    it '.build_from_request initializes a user from a JSON payload' do
+#      payload = { 
+#        email: '123@gmail.com', 
+#        password: '12345', 
+#        password_confirmation: '12345' 
+#      }.to_json
+#  
+#      user = User.build_from_request(payload)
+#      # is there a different way to test that the user has not yet been saved in the database?
+#      expect(user).to be_a User
+#      expect(user.id).to be_nil
+#    end
   end
 
   context 'instance methods' do
