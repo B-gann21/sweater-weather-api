@@ -38,60 +38,60 @@ You will need to create an account with these 3 sources to have your own API key
 * Example response:
 ```
 {
-    "data": {
-        "id": null,
-        "type": "forecast",
-        "attributes": {
-            "current_weather": {
-                "datetime": "2022-06-14T21:21:04.000-06:00",
-                "sunrise": "2022-06-14T05:31:26.000-06:00",
-                "sunset": "2022-06-14T20:29:10.000-06:00",
-                "temperature": 70.43,
-                "feels_like": 68.81,
-                "humidity": 35,
-                "uvi": 0,
-                "visibility": 10000,
-                "conditions": "few clouds",
-                "icon": "02n"
-            },
-            "daily_weather": [
-                {
-                    "date": "06/14/22",
-                    "sunrise": "2022-06-14T05:31:26.000-06:00",
-                    "sunset": "2022-06-14T20:29:10.000-06:00",
-                    "max_temp": 86.83,
-                    "min_temp": 61.23,
-                    "conditions": "few clouds",
-                    "icon": "02d"
-                },
-                {
-                    "date": "06/15/22",
-                    "sunrise": "2022-06-15T05:31:27.000-06:00",
-                    "sunset": "2022-06-15T20:29:34.000-06:00",
-                    "max_temp": 88.25,
-                    "min_temp": 56.08,
-                    "conditions": "clear sky",
-                    "icon": "01d"
-                },
-                {...}
-            ],
-            "hourly_weather": [
-                {
-                    "time": "2022-06-14T21:00:00.000-06:00",
-                    "temperature": 70.43,
-                    "conditions": "few clouds",
-                    "icon": "02n"
-                },
-                {
-                    "time": "2022-06-14T22:00:00.000-06:00",
-                    "temperature": 69.85,
-                    "conditions": "clear sky",
-                    "icon": "01n"
-                },
-                {...}
-            ]
-        }
-    }
+  "data": {
+    "id": null,
+    "type": "forecast",
+    "attributes": {
+       "current_weather": {
+          "datetime": "2022-06-14T21:21:04.000-06:00",
+          "sunrise": "2022-06-14T05:31:26.000-06:00",
+          "sunset": "2022-06-14T20:29:10.000-06:00",
+          "temperature": 70.43,
+          "feels_like": 68.81,
+          "humidity": 35,
+          "uvi": 0,
+          "visibility": 10000,
+          "conditions": "few clouds",
+          "icon": "02n"
+      },
+      "daily_weather": [
+         {
+           "date": "06/14/22",
+           "sunrise": "2022-06-14T05:31:26.000-06:00",
+           "sunset": "2022-06-14T20:29:10.000-06:00",
+           "max_temp": 86.83,
+           "min_temp": 61.23,
+           "conditions": "few clouds",
+           "icon": "02d"
+         },
+         {
+           "date": "06/15/22",
+           "sunrise": "2022-06-15T05:31:27.000-06:00",
+           "sunset": "2022-06-15T20:29:34.000-06:00",
+           "max_temp": 88.25,
+           "min_temp": 56.08,
+           "conditions": "clear sky",
+           "icon": "01d"
+         },
+         {...}
+     ],
+     "hourly_weather": [
+         {
+            "time": "2022-06-14T21:00:00.000-06:00",
+            "temperature": 70.43,
+            "conditions": "few clouds",
+            "icon": "02n"
+         },
+         {
+            "time": "2022-06-14T22:00:00.000-06:00",
+            "temperature": 69.85,
+            "conditions": "clear sky",
+            "icon": "01n"
+         },
+         {...}
+       ]
+     }
+  }
 }
 ```
 
@@ -100,20 +100,20 @@ You will need to create an account with these 3 sources to have your own API key
 * Example response:
 ```
 {
-    "data": {
-        "id": null,
-        "type": "image",
-        "attributes": {
-            "image": {
-                "location": "denver,co",
-                "image_url": "https://images.unsplash.com/photo-1629163330223-c183571735a1?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzMzY2Mjh8MHwxfHNlYXJjaHwxfHxkZW52ZXIlMkNjb3xlbnwwfHx8fDE2NTUxMzMyMDU&ixlib=rb-1.2.1&q=80",
-                "credit": {
-                    "source": "unsplash.com",
-                    "author": "Taylor Daugherty"
-                }
-            }
+  "data": {
+    "id": null,
+    "type": "image",
+    "attributes": {
+      "image": {
+        "location": "denver,co",
+        "image_url": "https://images.unsplash.com/photo-1629163330223-c183571735a1?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzMzY2Mjh8MHwxfHNlYXJjaHwxfHxkZW52ZXIlMkNjb3xlbnwwfHx8fDE2NTUxMzMyMDU&ixlib=rb-1.2.1&q=80",
+        "credit": {
+          "source": "unsplash.com",
+          "author": "Taylor Daugherty"
         }
+      }
     }
+  }
 }
 ```
 
