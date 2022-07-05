@@ -25,4 +25,4 @@ workflows:
     jobs:
       - say-hello
 store_test_results:
-    path: test-results
+    path: "test-results"
