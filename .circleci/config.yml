@@ -13,13 +13,11 @@ jobs:
     steps:
       - checkout
       - run:
-          command: sudo services postgresql start
-      - run:
           command: bundle install
       - run:
-          command: rails db:create
+          command: rails db:create RAILS_ENV=test
       - run:
-          command: rails db:migrate
+          command: rails db:migrate RAILS_ENV=test
       - run:
           command: bundle exec rspec
 
