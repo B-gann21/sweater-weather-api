@@ -8,7 +8,7 @@ orbs:
 jobs:
   build: # our first job, named "build"
     docker:
-      - image: cimg/ruby:2.7-node # use a tailored CircleCI docker image.
+      - image: cimg/ruby:2.7.4-node # use a tailored CircleCI docker image.
         auth:
           username: mydockerhub-user
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
@@ -16,7 +16,11 @@ jobs:
       - checkout
       - run:
           command: bundle install
-      - rails/run_tests
+      - run:
+          command: rails db:{create,migrate}
+      - run:
+          command: bundle exec rspec 
+
 
 # We use workflows to orchestrate the jobs that we declared above.
 workflows:
