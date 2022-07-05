@@ -11,6 +11,8 @@ jobs:
       xcode: 13.4.0
     steps:
       - checkout
+      - run:
+          command: gem install bundler 2.3.8
       - macos/switch-ruby:
           version: "2.7.4"
       - run:
