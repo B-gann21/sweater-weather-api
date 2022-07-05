@@ -15,6 +15,10 @@ jobs:
       - run:
           command: bundle install
       - run:
+          command: rails db:create
+      - run:
+          command: rails db:migrate
+      - run:
           command: bundle exec rspec
 
 
