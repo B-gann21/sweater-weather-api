@@ -13,6 +13,8 @@ jobs:
     steps:
       - checkout
       - run:
+          command: -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" 
+      - run:
           command: brew install postgresql
       - run:
           command: bundle install
