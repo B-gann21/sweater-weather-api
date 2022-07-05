@@ -2,6 +2,8 @@ version: 2.1 # Use 2.1 to enable using orbs and other features.
 
 # Declare the orbs that we'll use in our config.
 # read more about orbs: https://circleci.com/docs/2.0/orb-intro/
+orbs:
+  macos: circleci/macos@2
 
 jobs:
   build:
@@ -9,6 +11,8 @@ jobs:
       xcode: 13.4.0
     steps:
       - checkout
+      - macos/switch-ruby:
+          version: "2.7.4"
       - run:
           command: bundle install
       - run:
