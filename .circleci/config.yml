@@ -13,6 +13,8 @@ jobs:
     steps:
       - checkout
       - run:
+          command: sudo services postgresql start
+      - run:
           command: bundle install
       - run:
           command: rails db:create
