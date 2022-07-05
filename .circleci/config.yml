@@ -2,8 +2,6 @@ version: 2.1 # Use 2.1 to enable using orbs and other features.
 
 # Declare the orbs that we'll use in our config.
 # read more about orbs: https://circleci.com/docs/2.0/orb-intro/
-orbs: 
-  rails: finalcad/rails@2.3.0
 
 jobs:
   build: # our first job, named "build"
