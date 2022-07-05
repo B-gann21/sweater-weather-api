@@ -13,9 +13,9 @@ jobs:
     steps:
       - checkout
       - run:
-          command: rails db:{create,migrate} 
-      - run:
           command: bundle install
+      - run:
+          command: rails db:{create,migrate} 
       - run:
           command: bundle exec rspec
 
