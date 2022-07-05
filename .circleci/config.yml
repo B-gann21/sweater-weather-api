@@ -4,20 +4,17 @@ version: 2.1 # Use 2.1 to enable using orbs and other features.
 # read more about orbs: https://circleci.com/docs/2.0/orb-intro/
 
 jobs:
-  build: # our first job, named "build"
-    docker:
-      - image: cimg/ruby:2.7.4-node # use a tailored CircleCI docker image.
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+  build:
+    macos:
+      xcode: 13.4.0
     steps:
       - checkout
       - run:
           command: bundle install
       - run:
-          command: rails db:create RAILS_ENV=test
+          command: rails db:create
       - run:
-          command: rails db:migrate RAILS_ENV=test
+          command: rails db:migrate
       - run:
           command: bundle exec rspec
 
