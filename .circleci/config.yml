@@ -13,6 +13,10 @@ jobs:
     steps:
       - checkout
       - run:
+          command: brew install postgresql
+      - run:
+          command: brew services start postgresql
+      - run:
           command: bundle install
       - run:
           command: bundle exec rspec 
