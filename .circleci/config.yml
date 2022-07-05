@@ -14,6 +14,8 @@ jobs:
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
     steps:
       - checkout
+      - run:
+          command: bundle install
       - rails/run_tests
 
 # We use workflows to orchestrate the jobs that we declared above.
