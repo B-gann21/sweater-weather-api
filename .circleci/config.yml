@@ -13,8 +13,6 @@ jobs:
     steps:
       - checkout
       - run:
-          command: curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
-      - run:
           command: bundle install
       - run:
           command: bundle exec rspec 
