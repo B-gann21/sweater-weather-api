@@ -17,7 +17,7 @@ jobs:
       - run:
           command: bundle install
       - run:
-          command: bundle exec rspec 
+          command: bundle exec rspec
 
 
 # We use workflows to orchestrate the jobs that we declared above.
