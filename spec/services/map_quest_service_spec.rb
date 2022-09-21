@@ -4,7 +4,7 @@ RSpec.describe MapQuestService do
   context 'class methods' do
     it '.get_city_info returns a hash of a given city' do
       denver_data = File.read('spec/fixtures/map_quest_denver_response.json')
-      stub_request(:get, "http://www.mapquestapi.com/geocoding/v1/address?key&location=denver,co")
+      stub_request(:get, "http://www.mapquestapi.com/geocoding/v1/address?key=#{ENV['map_quest_key']}&location=denver,co")
         .to_return(status: 200, body: denver_data, headers: {})
 
       result = MapQuestService.get_city_info('denver,co')
